@@ -1,0 +1,23 @@
+{
+  "name": "lotus-fvm-localnet-web",
+  "version": "1.0.0",
+  "description": "lotus-fvm-localnet-web ===",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimpick/lotus-fvm-localnet-web.git"
+  },
+  "keywords": [],
+  "author": "Jim Pick (@jimpick)",
+  "license": "MIT/Apache-2 (Permissive License Stack)",
+  "bugs": {
+    "url": "https://github.com/jimpick/lotus-fvm-localnet-web/issues"
+  },
+  "homepage": "https://github.com/jimpick/lotus-fvm-localnet-web#readme",
+  "dependencies": {
+    "fastify": "^3.28.0"
+  }
+}

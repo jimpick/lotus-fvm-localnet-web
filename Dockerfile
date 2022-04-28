@@ -30,3 +30,17 @@ RUN apt install -y nodejs
 
 RUN apt upgrade -y
 
+
+WORKDIR /home/ubuntu/web
+
+COPY . .
+
+RUN chown -R ubuntu. .
+
+USER ubuntu
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD node server.mjs

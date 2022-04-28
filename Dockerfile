@@ -28,12 +28,22 @@ RUN echo "deb-src [signed-by=$KEYRING] https://deb.nodesource.com/$VERSION $DIST
 RUN apt-get update
 RUN apt install -y nodejs
 
+# Caddy server
+# https://caddyserver.com/docs/install#debian-ubuntu-raspbian
+
+RUN apt install -y debian-keyring debian-archive-keyring apt-transport-https
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
+RUN apt-get update
+RUN apt install -y caddy
+
 RUN apt upgrade -y
 
 
 WORKDIR /home/ubuntu/web
 
 COPY . .
+RUN mv Caddyfile /etc/caddy/Caddyfile
 
 RUN chown -R ubuntu. .
 
@@ -43,4 +53,5 @@ RUN npm install
 
 EXPOSE 3000
 
-CMD node server.mjs
+#CMD node server.mjs
+CMD bash -c 'caddy start -config /etc/caddy/Caddyfile; node server.mjs'

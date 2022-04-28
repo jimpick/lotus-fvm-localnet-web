@@ -2,7 +2,7 @@ all: build
 
 build: build-web
 
-.PHONY: all build build-web run run-bash
+.PHONY: all build build-web run run-bash exec-bash
 
 build-web:
 	DOCKER_BUILDKIT=1 docker build -f Dockerfile --progress=plain -t jimpick/lotus-fvm-localnet-web .

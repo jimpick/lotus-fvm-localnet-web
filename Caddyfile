@@ -9,17 +9,57 @@
 # domain name.
 
 :3000 {
-	# Set this path to your site's directory.
-	root * /usr/share/caddy
 
-	# Enable the static file server.
-	file_server
+  log
 
-	# Another common task is to set up a reverse proxy:
-	# reverse_proxy localhost:8080
+  @api_rpc_options {
+      path_regexp api ^/rpc/(.*)$
+      method OPTIONS
+  }
 
-	# Or serve a PHP site through php-fpm:
-	# php_fastcgi localhost:9000
+  route @api_rpc_options {
+      header Connection "keep-alive"
+      header Access-Control-Allow-Origin "*"
+      header Access-Control-Allow-Methods "POST, GET, PUT, OPTIONS, DELETE"
+      header Access-Control-Max-Age "86400"
+      header Access-Control-Allow-Headers "*"
+      respond "" 204
+  }
+
+  @api_rpc {
+      path_regexp api ^/rpc/(.*)$
+  }
+
+  route @api_rpc {
+    reverse_proxy 127.0.0.1:1234 {
+      header_down Access-Control-Allow-Origin "*"
+    }
+  }
+
+  @api_rest_options {
+      path_regexp api ^/rest/(.*)$
+      method OPTIONS
+  }
+
+  route @api_rest_options {
+      header Connection "keep-alive"
+      header Access-Control-Allow-Origin "*"
+      header Access-Control-Allow-Methods "POST, GET, PUT, OPTIONS, DELETE"
+      header Access-Control-Max-Age "86400"
+      header Access-Control-Allow-Headers "*"
+      respond "" 204
+  }
+
+  @api_rest {
+      path_regexp api ^/rest/(.*)$
+  }
+
+  route @api_rest {
+    reverse_proxy 127.0.0.1:1234 {
+      header_down Access-Control-Allow-Origin "*"
+    }
+  }
+
 }
 
 # Refer to the Caddy docs for more information:

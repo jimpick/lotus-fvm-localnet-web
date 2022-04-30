@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jimpick/lotus-fvm-localnet-web#readme",
   "dependencies": {
+    "@fastify/cors": "^7.0.0",
     "fastify": "^3.28.0"
   }
 }

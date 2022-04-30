@@ -2,7 +2,7 @@ all: build
 
 build: build-web-api
 
-.PHONY: all build build-web-base build-web-api run-base run-base-bash run-api run-api-bash exec-bash
+.PHONY: all build build-web-base build-web-api run-base run-base-bash run-api run-api-bash exec-bash update
 
 build-web-base:
 	DOCKER_BUILDKIT=1 docker build -f Dockerfile-web-base --progress=plain -t jimpick/lotus-fvm-localnet-web-base .
@@ -33,4 +33,5 @@ run-api-bash:
 exec-bash:
 	docker exec -it localnet-web bash -i
 
-
+update:
+	git submodule update --recursive --init

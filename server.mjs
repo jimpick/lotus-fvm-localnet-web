@@ -1,12 +1,11 @@
 import Fastify from 'fastify'
+import fastifyCors from '@fastify/cors'
 
 const fastify = Fastify({
   logger: true
 })
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
-})
+fastify.register(fastifyCors)
 
 fastify.post('/compile', async (request, reply) => {
   return {

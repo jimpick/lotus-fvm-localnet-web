@@ -42,20 +42,16 @@ RUN apt upgrade -y
 
 WORKDIR /home/ubuntu/web
 
-COPY . .
-RUN mv Caddyfile /etc/caddy/Caddyfile
+COPY fil-hellow-world-actor .
 
 RUN chown -R ubuntu. .
 
 USER ubuntu
 
-RUN npm install
-
 WORKDIR /home/ubuntu/web/fil-hello-world-actor
 
 RUN rustup update
-RUN rustup toolchain install nightly
-RUN rustup target add wasm32-unknown-unknown --toolchain nightly
+RUN rustup target add wasm32-unknown-unknown
 RUN rm -f rust-toolchain
 RUN rustup show
 RUN cargo clean
@@ -63,7 +59,3 @@ RUN cargo build
 
 WORKDIR /home/ubuntu/web
 
-EXPOSE 3000
-
-#CMD node server.mjs
-CMD bash -c 'caddy start -config /etc/caddy/Caddyfile; node server.mjs'

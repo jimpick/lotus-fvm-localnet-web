@@ -60,6 +60,12 @@
     }
   }
 
+  route /compile {
+    reverse_proxy 127.0.0.1:4000 {
+      header_down Access-Control-Allow-Origin "*"
+    }
+  }
+
 }
 
 # Refer to the Caddy docs for more information:

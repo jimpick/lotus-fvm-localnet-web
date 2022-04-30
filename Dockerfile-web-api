@@ -1,0 +1,25 @@
+# syntax=docker/dockerfile:1.4
+
+FROM ghcr.io/jimpick/lotus-fvm-localnet-web-base@sha256:5c1659a81a6ce1503132f688716a0b57650ea107ca7ba98689744f60f4d31b4f
+
+USER root
+
+WORKDIR /home/ubuntu/web
+
+COPY Caddyfile .
+RUN mv Caddyfile /etc/caddy/Caddyfile
+
+COPY package.json .
+COPY package-lock.json .
+COPY server.mjs .
+
+RUN chown -R ubuntu. .
+
+USER ubuntu
+
+RUN npm install
+
+EXPOSE 3000
+
+#CMD node server.mjs
+CMD bash -c 'caddy start -config /etc/caddy/Caddyfile; node server.mjs'

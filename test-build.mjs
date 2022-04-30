@@ -1,6 +1,7 @@
 import { promisify } from 'util' 
 import { exec } from 'child_process'
 import fs from 'fs'
+import { encode } from 'borc'
 
 const execWithPromise = promisify(exec)
 
@@ -21,6 +22,11 @@ async function run () {
       'fil_hello_world_actor/fil_hello_world_actor.compact.wasm'
     )
     console.log('bytes:\n', buffer)
+    const encoded = encode([ buffer ])
+    console.log('cbor:\n', encoded)
+    fs.writeFileSync('encoded.bin', encoded)
+    const base64Encoded = encoded.toString('base64')
+    console.log('base64:\n', base64Encoded.slice(0, 20) + '...' + base64Encoded.slice(-20))
   } catch (e) {
     console.error('Exception:', e.message)
     console.error('Code:', e.code)

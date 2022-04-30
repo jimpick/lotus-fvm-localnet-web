@@ -42,7 +42,7 @@ RUN apt upgrade -y
 
 WORKDIR /home/ubuntu/web
 
-COPY fil-hello-world-actor .
+COPY fil-hello-world-actor fil-hello-world-actor
 
 RUN chown -R ubuntu. .
 

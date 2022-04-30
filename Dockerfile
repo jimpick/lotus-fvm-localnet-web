@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-FROM ghcr.io/jimpick/lotus-fvm-localnet-ready@sha256:f181f34189fd9b4ec7e3690ceca2c7d3d620a3fa9c9a06fb766049742d58b161
+FROM ghcr.io/jimpick/lotus-fvm-localnet-ready@sha256:67d4ff67ecd10957dda4db1d6cad3de49e1c8229245ab4ab74cfad442fd5d2cc
 
 USER root
 
@@ -50,6 +50,18 @@ RUN chown -R ubuntu. .
 USER ubuntu
 
 RUN npm install
+
+WORKDIR /home/ubuntu/web/fil-hello-world-actor
+
+RUN rustup update
+RUN rustup toolchain install nightly
+RUN rustup target add wasm32-unknown-unknown --toolchain nightly
+RUN rm -f rust-toolchain
+RUN rustup show
+RUN cargo clean
+RUN cargo build
+
+WORKDIR /home/ubuntu/web
 
 EXPOSE 3000
 

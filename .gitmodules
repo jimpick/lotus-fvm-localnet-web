@@ -1,0 +1,3 @@
+[submodule "fil-hello-world-actor"]
+	path = fil-hello-world-actor
+	url = https://github.com/raulk/fil-hello-world-actor.git

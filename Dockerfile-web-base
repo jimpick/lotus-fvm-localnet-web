@@ -51,7 +51,9 @@ USER ubuntu
 WORKDIR /home/ubuntu/web/fil-hello-world-actor
 
 RUN rustup update
-RUN rustup target add wasm32-unknown-unknown
+RUN rustup toolchain install nightly
+RUN rustup target add wasm32-unknown-unknown --toolchain nightly
+RUN rustup default nightly
 RUN rm -f rust-toolchain
 RUN rustup show
 RUN cargo clean

@@ -1,10 +1,15 @@
-name: lotus-fvm-localnet-web
+name: lotus-fvm-localnet-web-base
 
-on: [ push ]
+on:
+  push:
+    paths:
+      - .github/workflows/container-web-base.yml
+      - Dockerfile-base
+      - fil-hello-world-actor
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: jimpick/lotus-fvm-localnet-web
+  IMAGE_NAME: jimpick/lotus-fvm-localnet-web-base
 
 jobs:
   run-build-and-push-oci-image:
@@ -28,8 +33,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build-web
-        run: make build-web
+      - name: build-web-base
+        run: make build-web-base
 
       - name: Tag Docker image
         run: docker image tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY}}/${{ env.IMAGE_NAME }}

@@ -5,7 +5,7 @@ build: build-web-base
 .PHONY: all build build-web-base run-base run-bash-base exec-bash-base
 
 build-web-base:
-	DOCKER_BUILDKIT=1 docker build -f Dockerfile --progress=plain -t jimpick/lotus-fvm-localnet-web-base .
+	DOCKER_BUILDKIT=1 docker build -f Dockerfile-web-base --progress=plain -t jimpick/lotus-fvm-localnet-web-base .
 
 run-base:
 	-docker stop localnet-web

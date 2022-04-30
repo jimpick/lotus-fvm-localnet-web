@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/container-web-base.yml
-      - Dockerfile-base
+      - Dockerfile-web-base
       - fil-hello-world-actor
 
 env:

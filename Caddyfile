@@ -26,7 +26,6 @@
 
   route @api_rpc_options {
       header Connection "keep-alive"
-      header Access-Control-Allow-Origin "*"
       header Access-Control-Allow-Methods "POST, GET, PUT, OPTIONS, DELETE"
       header Access-Control-Max-Age "86400"
       header Access-Control-Allow-Headers "*"
@@ -38,9 +37,7 @@
   }
 
   route @api_rpc {
-    reverse_proxy 127.0.0.1:1234 {
-      header_down Access-Control-Allow-Origin "*"
-    }
+    reverse_proxy 127.0.0.1:1234
   }
 
   @api_rest_options {
@@ -50,7 +47,6 @@
 
   route @api_rest_options {
       header Connection "keep-alive"
-      header Access-Control-Allow-Origin "*"
       header Access-Control-Allow-Methods "POST, GET, PUT, OPTIONS, DELETE"
       header Access-Control-Max-Age "86400"
       header Access-Control-Allow-Headers "*"
@@ -62,9 +58,7 @@
   }
 
   route @api_rest {
-    reverse_proxy 127.0.0.1:1234 {
-      header_down Access-Control-Allow-Origin "*"
-    }
+    reverse_proxy 127.0.0.1:1234
   }
 
   route /compile {

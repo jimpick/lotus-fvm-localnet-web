@@ -12,6 +12,7 @@
 
   log
 
+  header Access-Control-Allow-Origin "*"
 
   file_server /public/* {
     root /home/ubuntu/web

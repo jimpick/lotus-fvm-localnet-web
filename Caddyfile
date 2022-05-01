@@ -12,6 +12,12 @@
 
   log
 
+
+  file_server /public/* {
+    root /home/ubuntu/web
+    browse
+  }
+
   @api_rpc_options {
       path_regexp api ^/rpc/(.*)$
       method OPTIONS

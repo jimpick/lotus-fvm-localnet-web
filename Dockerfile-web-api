@@ -13,6 +13,9 @@ COPY package.json .
 COPY package-lock.json .
 COPY server.mjs .
 
+RUN mkdir -p public
+RUN cp /home/ubuntu/.lotus-local-net/token public/token
+
 RUN chown -R ubuntu. .
 
 USER ubuntu

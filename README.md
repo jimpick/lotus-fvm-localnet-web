@@ -7,6 +7,46 @@ inside a Kubernetes container, intended for use with [Knative](https://knative.d
 quickly spinning up "serverless" development environments for experimenting with
 FVM actor development (aka. smart contracts).
 
-# License
+## Example Deployment
+
+This is being used to dynamically spin up Lotus localnets from this ObservableHQ notebook:
+
+*  https://observablehq.com/@jimpick/fvm-actor-code-playground-hello-world?collection=@jimpick/filecoin-virtual-machine
+
+## Example Knative Service Resource
+
+```
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: fvm-1
+  namespace: default
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/scale-to-zero-pod-retention-period: "3m"
+    spec:
+      containerConcurrency: 0
+      containers:
+      - name: node
+        image: ghcr.io/jimpick/lotus-fvm-localnet-web-api@sha256:6c8ecebfa21883c1c4f3bc967071cf340c151d9cd333292463e99cef0eba93cd
+        command: [ bash, -c ]
+        args:
+          - |
+            lotus daemon --lotus-make-genesis=devgen.car --genesis-template=localnet.json --bootstrap=false
+      - name: miner
+        image: ghcr.io/jimpick/lotus-fvm-localnet-web-api@sha256:6c8ecebfa21883c1c4f3bc967071cf340c151d9cd333292463e99cef0eba93cd
+        command: [ bash, -c ]
+        args:
+          - |
+            lotus-miner run --nosync
+      - name: web
+        image: ghcr.io/jimpick/lotus-fvm-localnet-web-api@sha256:6c8ecebfa21883c1c4f3bc967071cf340c151d9cd333292463e99cef0eba93cd
+        ports:
+          - containerPort: 3000
+```
+
+## License
 
 Apache 2 or MIT

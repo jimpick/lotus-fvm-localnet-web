@@ -7,6 +7,24 @@ inside a Kubernetes container, intended for use with [Knative](https://knative.d
 quickly spinning up "serverless" development environments for experimenting with
 FVM actor development (aka. smart contracts).
 
+## Building the Container image
+
+The container images are built using GitHub Actions, which automatically upload the images
+to the GitHub Container Registry.
+
+* https://github.com/jimpick/lotus-fvm-localnet-web/actions
+* https://github.com/jimpick/lotus-fvm-localnet-web/tree/main/.github/workflows
+
+Because the image takes so long, it is built in several stages.
+
+* `ghcr.io/jimpick/lotus-fvm-localnet-web-base`: Builds the Rust hello world actor example
+* `ghcr.io/jimpick/lotus-fvm-localnet-web-api`: Builds the Node.js "cargo build" API service
+
+These depend on yet another container image that builds the base Ubuntu image with
+Lotus + params, which has a chain bootstrapped and ready-to-run:
+
+* Repo: https://github.com/jimpick/lotus-fvm-localnet
+
 ## Example Deployment
 
 This is being used to dynamically spin up Lotus localnets from this ObservableHQ notebook:

@@ -39,7 +39,6 @@
 
   route @api_rpc {
     reverse_proxy 127.0.0.1:1234 {
-      header_up Content-Type "application/json"
       header_down Access-Control-Allow-Origin "*"
     }
   }

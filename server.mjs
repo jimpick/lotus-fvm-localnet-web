@@ -26,7 +26,12 @@ fastify.post('/compile', async (request, reply) => {
         })
     )
   }
+
   fs.writeFileSync('fil-hello-world-actor/src/lib.rs', request.body['lib.rs'])
+  if (request.body['Cargo.toml']) {
+    fs.writeFileSync('fil-hello-world-actor/Cargo.toml', request.body['Cargo.toml'])
+  }
+
   try {
     const { stdout, stderr } = await execWithPromise(
       'cargo build',

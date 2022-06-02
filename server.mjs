@@ -16,7 +16,9 @@ const fastify = Fastify({
 fastify.register(fastifyCors)
 
 // https://stackoverflow.com/questions/61122089/how-do-i-access-the-raw-body-of-a-fastify-request
+
 fastify.addContentTypeParser('binary/octet-stream', (req, done) => {
+  if (req.method === 'POST') { // CORS preflight issue?
     rawBody(req, {
         length: req.headers['content-length'],
         limit: '1mb',
@@ -26,6 +28,9 @@ fastify.addContentTypeParser('binary/octet-stream', (req, done) => {
         // done(null, parse(body))
         done(null, body)
     })
+  } else {
+    done(null, req.body)
+  }
 })
 
 fastify.post('/compile', async (request, reply) => {

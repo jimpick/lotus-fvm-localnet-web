@@ -20,6 +20,7 @@
   "dependencies": {
     "@fastify/cors": "^7.0.0",
     "borc": "^3.0.0",
-    "fastify": "^3.28.0"
+    "fastify": "^3.28.0",
+    "raw-body": "^2.5.1"
   }
 }

@@ -4,6 +4,16 @@ FROM ghcr.io/jimpick/lotus-fvm-localnet-ready@sha256:97692a8bc7292defb4368140008
 
 USER root
 
+# Solidity
+# https://docs.soliditylang.org/en/v0.8.16/installing-solidity.html
+
+RUN apt install -y software-properties-common
+RUN add-apt-repository ppa:ethereum/ethereum
+RUN apt-get update
+RUN apt-get install -y solc
+
+# Node
+
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt install -y nodejs
 
@@ -28,6 +38,8 @@ RUN chown -R ubuntu. .
 USER ubuntu
 
 WORKDIR /home/ubuntu/web/fil-hello-world-actor
+
+# Rust
 
 RUN rustup update
 RUN rustup toolchain install nightly

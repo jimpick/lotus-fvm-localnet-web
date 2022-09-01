@@ -102,21 +102,28 @@ fastify.post('/compile-evm', async (request, reply) => {
 
   try {
     const { stdout, stderr } = await execWithPromise(
-      'solc --bin -o output contract.sol',
+      'solc --bin --hashes -o output contract.sol',
       {
         cwd: 'evm-contract'
       }
     )
     let evmBinary = null
+    let evmSignatures = null
     const files = fs.readdirSync('evm-contract/output')
     for (const file of files) {
-      evmBinary = fs.readFileSync('evm-contract/output/' + file, 'utf8')
+      if (!evmBinary && file.endsWith('.bin')) {
+        evmBinary = fs.readFileSync('evm-contract/output/' + file, 'utf8')
+      }
+      if (!evmSignatures && file.endsWith('.signatures')) {
+        evmSignatures = fs.readFileSync('evm-contract/output/' + file, 'utf8')
+      }
       continue
     }
     return {
       success: true,
       logs: stderr,
-      evmBinary
+      evmBinary,
+      evmSignatures
     }
   } catch (e) {
     console.error('Exception:', e.message)

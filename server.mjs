@@ -83,6 +83,59 @@ fastify.post('/compile', async (request, reply) => {
   }
 })
 
+fastify.post('/compile-evm', async (request, reply) => {
+  // console.log('Request body', request.body)
+  if (!request.body || !request.body['contract.sol']) {
+    return (
+      reply
+        .code(400)
+        .header('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          error: 'Missing data for contract.sol'
+        })
+    )
+  }
+
+  fs.rmSync('evm-contract', { recursive: true, force: true })
+  fs.mkdirSync('evm-contract/output', { recursive: true })
+  fs.writeFileSync('evm-contract/contract.sol', request.body['contract.sol'])
+
+  try {
+    const { stdout, stderr } = await execWithPromise(
+      'solc --bin -o output contract.sol',
+      {
+        cwd: 'evm-contract'
+      }
+    )
+    let evmBinary = null
+    const files = fs.readdirSync('evm-contract/output')
+    for (const file of files) {
+      evmBinary = fs.readFileSync('evm-contract/output/' + file, 'utf8')
+      continue
+    }
+    return {
+      success: true,
+      logs: stderr,
+      evmBinary
+    }
+  } catch (e) {
+    console.error('Exception:', e.message)
+    console.error('Code:', e.code)
+    console.error('stdout:\n', e.stdout)
+    console.error('stderr:\n', e.stderr)
+    return (
+      reply
+        .code(400)
+        .header('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          success: false,
+          code: e.code,
+          error: e.stderr
+        })
+    )
+  }
+})
+
 let fileCounter = 0
 
 fastify.post('/upload', async (request, reply) => {

@@ -2,3 +2,4 @@ node_modules
 *.swp
 *.bin
 tmp
+evm-contract

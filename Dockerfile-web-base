@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-FROM ghcr.io/jimpick/lotus-fvm-localnet-ready@sha256:16187d6724277ca4b7e0b5417edccc1afa1a1b834ed1e73ed61ab3f8e5eccf4e
+FROM ghcr.io/jimpick/lotus-fvm-localnet-ready@sha256:26d684875e78a7c8232a201dc7c3e23c122ab033d3da2fbc2551bbd7bfe086c9
 
 USER root
 

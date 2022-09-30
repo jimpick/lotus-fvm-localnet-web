@@ -24,4 +24,4 @@ RUN npm install
 
 EXPOSE 3000
 
-CMD bash -c 'caddy start -config /etc/caddy/Caddyfile; node server.mjs'
+CMD bash -c 'caddy start --config /etc/caddy/Caddyfile; node server.mjs'
